@@ -30,6 +30,4 @@ cd tetris
     - Down arrow: move the piece down (soft drop)
     - Up arrow: rotate the piece clockwise
 
-2. Press the spacebar to perform a hard drop, instantly placing the piece at the bottom of the playing field.
-
 3. Clear lines by filling them with
