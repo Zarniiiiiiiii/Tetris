@@ -1,3 +1,51 @@
-# Tetris
-Tetris game written in Vanilla JS and refractored as a google chrome extension : https://chrome.google.com/webstore/detail/tetris-the-revenge-of-the/aadjnecnjjhjaneemcnecjokbbdnhgkd   <- it's still live
-Sounds are already coded in the script. So anyone can add game over, game start, highscore, pop sounds just by creating their own mp3 files. Code for music is already implmeneted too.
+# Tetris Game
+
+![Tetris Game Screenshot](./screenshot.png)
+
+This repository contains a simple and fun implementation of the classic Tetris game using JavaScript, HTML, and CSS. It aims to provide a nostalgic gaming experience to users while demonstrating clean code and good programming practices.
+
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contribute](#contribute)
+- [License](#license)
+
+## Features
+
+- Classic Tetris gameplay
+- Responsive design that works on desktop and mobile devices
+- Intuitive controls for easy navigation and gameplay
+- Scoring system that increases in difficulty as the game progresses
+- Clean and structured code for easy customization and further development
+
+## Installation
+
+To install and run this game locally, follow these steps:
+
+1. Clone this repository:
+
+\`\`\`
+git clone https://github.com/Levan-D/tetris.git
+\`\`\`
+
+2. Change into the project directory:
+
+\`\`\`
+cd tetris
+\`\`\`
+
+3. Open the `index.html` file in your preferred web browser.
+
+## Usage
+
+1. Use the arrow keys to move the tetromino pieces.
+    - Left arrow: move the piece to the left
+    - Right arrow: move the piece to the right
+    - Down arrow: move the piece down (soft drop)
+    - Up arrow: rotate the piece clockwise
+
+2. Press the spacebar to perform a hard drop, instantly placing the piece at the bottom of the playing field.
+
+3. Clear lines by filling them with
