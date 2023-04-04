@@ -22,7 +22,7 @@ cd tetris
 
 3. Open the `index.html` file in your preferred web browser.
 
-4. Optionally, you can add music to the game by creating a music folder and loading mp3's into it with a file name format of track_[index].mp3 
+4. Optionally, you can add music to the game by creating a music folder in the source folder and loading mp3's into it with a file name format of track_[index].mp3 
 
 ## Usage
 
