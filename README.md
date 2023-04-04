@@ -4,22 +4,6 @@
 
 This repository contains a simple and fun implementation of the classic Tetris game using JavaScript, HTML, and CSS. It aims to provide a nostalgic gaming experience to users while demonstrating clean code and good programming practices.
 
-## Table of Contents
-
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contribute](#contribute)
-- [License](#license)
-
-## Features
-
-- Classic Tetris gameplay
-- Responsive design that works on desktop and mobile devices
-- Intuitive controls for easy navigation and gameplay
-- Scoring system that increases in difficulty as the game progresses
-- Clean and structured code for easy customization and further development
-
 ## Installation
 
 To install and run this game locally, follow these steps:
