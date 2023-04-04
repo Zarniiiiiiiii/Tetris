@@ -10,15 +10,15 @@ To install and run this game locally, follow these steps:
 
 1. Clone this repository:
 
-\`\`\`
+```
 git clone https://github.com/Levan-D/tetris.git
-\`\`\`
+```
 
 2. Change into the project directory:
 
-\`\`\`
+```
 cd tetris
-\`\`\`
+```
 
 3. Open the `index.html` file in your preferred web browser.
 
