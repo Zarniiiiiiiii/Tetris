@@ -61,6 +61,12 @@ body {
   pointer-events: none;
   z-index: 1;
   font-family: monospace;
+  display: none; /* Hide by default */
+}
+
+/* Show numbers in developer mode */
+.developer-mode .tile-number {
+  display: block;
 }
 
 /* Ensure numbers are visible but don't interfere with game play */

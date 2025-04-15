@@ -616,6 +616,8 @@ function gameOver() {
 // Developer mode functions
 function toggleDevMode() {
   devBtn.style.display = devBtn.style.display === 'none' ? 'block' : 'none'
+  // Toggle developer mode class on the grid
+  grid.classList.toggle('developer-mode')
 }
 
 function addCompleteRow() {
