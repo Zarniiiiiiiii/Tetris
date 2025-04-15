@@ -187,3 +187,30 @@ body {
   text-align: center;
   color: #babec4;
 }
+
+/* Developer mode button styles */
+.devBtn {
+  margin: 45px 0 0 75px;
+}
+
+.addRowBtn {
+  font-weight: bold;
+  text-align: center;
+  width: 160px;
+  height: 60px;
+  border: solid;
+  border-radius: 15px;
+  font-size: 20px;
+  background-color: #ff4444;
+  line-height: 60px;
+  color: #eeeeee;
+  cursor: pointer;
+}
+
+.addRowBtn:hover {
+  background-color: #ff3333;
+}
+
+.addRowBtn:active {
+  background-color: #ff2222;
+}

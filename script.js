@@ -7,6 +7,8 @@ const muteBtn = document.querySelector(".muteMusic")
 const unmuteBtn = document.querySelector(".unmuteMusic")
 const mainMenuContainer = document.querySelector(".mainMenuContainer")
 const scoreDisplay = document.querySelector("#score")
+const devBtn = document.querySelector(".devBtn")
+const addRowBtn = document.querySelector(".addRowBtn")
 const width = 10
 let isGameOver = true
 let isMusicPlaying = false
@@ -523,3 +525,46 @@ function gameOver() {
     highScoreDisplay()
   }
 }
+
+// Developer mode functions
+function toggleDevMode() {
+  devBtn.style.display = devBtn.style.display === 'none' ? 'block' : 'none'
+}
+
+function addCompleteRow() {
+  // Find the lowest row that's not completely filled
+  let targetRow = -1
+  for (let i = 19; i >= 0; i--) {
+    const rowStart = i * width
+    const row = squares.slice(rowStart, rowStart + width)
+    if (!row.every(square => square.classList.contains('taken'))) {
+      targetRow = i
+      break
+    }
+  }
+
+  if (targetRow === -1) return // All rows are full
+
+  // Add a complete row at the target position
+  const rowStart = targetRow * width
+  for (let i = 0; i < width; i++) {
+    const index = rowStart + i
+    squares[index].classList.add('taken')
+    squares[index].style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]
+  }
+
+  // Check for game over
+  if (current.some(index => squares[currentPosition + index].classList.contains("taken"))) {
+    gameOver()
+  }
+}
+
+// Change keyboard shortcut to Ctrl+V
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.key === 'v') {
+    toggleDevMode()
+  }
+})
+
+// Add click handler for the add row button
+addRowBtn.addEventListener('click', addCompleteRow)
