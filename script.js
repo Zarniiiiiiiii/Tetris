@@ -149,21 +149,35 @@ const GridManager = {
       
       currentIndices.forEach((currentIndex, i) => {
         const aboveIndex = aboveIndices[i]
-        if (this.domElements[aboveIndex]?.classList.contains('taken')) {
-          this.domElements[currentIndex].classList.add('taken')
-          this.domElements[currentIndex].style.backgroundColor = 
-            this.domElements[aboveIndex].style.backgroundColor
+        const currentCell = this.domElements[currentIndex]
+        const aboveCell = this.domElements[aboveIndex]
+        
+        if (aboveCell?.classList.contains('taken')) {
+          // Copy all classes from the above cell
+          currentCell.className = aboveCell.className
+          
+          // Copy all inline styles
+          currentCell.style.cssText = aboveCell.style.cssText
+          
+          // Ensure the tetromino class is preserved
+          if (aboveCell.classList.contains('tetromino')) {
+            currentCell.classList.add('tetromino')
+          }
         } else {
-          this.domElements[currentIndex].classList.remove('taken')
-          this.domElements[currentIndex].style.backgroundColor = ''
+          // Clear the cell if nothing above it
+          currentCell.classList.remove('taken')
+          currentCell.classList.remove('tetromino')
+          currentCell.style.backgroundColor = ''
         }
       })
     }
     
     // Clear the top row
     this.getRowIndices(0).forEach(index => {
-      this.domElements[index].classList.remove('taken')
-      this.domElements[index].style.backgroundColor = ''
+      const cell = this.domElements[index]
+      cell.classList.remove('taken')
+      cell.classList.remove('tetromino')
+      cell.style.backgroundColor = ''
     })
   }
 }
