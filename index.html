@@ -3,16 +3,23 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Meta tags for character encoding and responsive design -->
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- External resources: CSS, JavaScript, and fonts -->
     <link rel="stylesheet" href="stylesheet.css" />
+    <!-- Font Awesome for icons -->
     <script
       src="https://kit.fontawesome.com/f2c725910d.js"
       crossorigin="anonymous"
     ></script>
+    <!-- Main game script -->
     <script defer src="script.js"></script>
+    <!-- Game favicon -->
     <link rel="icon" href="icon128.png" />
+    <!-- Google Fonts for game styling -->
     <link
       href="https://fonts.googleapis.com/css2?family=Changa:wght@700&family=Press+Start+2P&display=swap"
       rel="stylesheet"
@@ -21,15 +28,25 @@
   </head>
 
   <body>
+    <!-- Main game container -->
     <div class="container">
+      <!-- Main game grid where tetrominoes will fall -->
       <div class="grid"></div>
+      <!-- Container for main menu elements -->
       <div class="mainMenuContainer"></div>
+      <!-- Side panel container for game information -->
       <div class="leContainer">
+        <!-- Mini grid showing next tetromino -->
         <div class="mini-grid"></div>
+        <!-- Score display -->
         <div class="scoreScore">SCORE:<span id="score">00</span></div>
+        <!-- Start game button -->
         <div class="startBtn">START</div>
+        <!-- Sound settings controls -->
         <div class="soundSettings">
+          <!-- Unmute button -->
           <div class="unmuteMusic">M</div>
+          <!-- Mute button with visual indicator -->
           <div class="muteMusic">
             M
             <div class="line"></div>
