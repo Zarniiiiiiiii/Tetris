@@ -106,15 +106,90 @@ const remarks = [
   "AAAAAAAAAAAAHHHRHGHHHGH, YOU`VE JUST BORED ME TO DEATH",
 ]
 
+// Grid management system
+const GridManager = {
+  width: 10,
+  height: 20,
+  totalSquares: 210, // 10x20 grid + 10 bottom squares
+  squares: [],
+  domElements: [],
+
+  initialize() {
+    this.squares = Array(this.totalSquares).fill(null)
+    this.domElements = Array(this.totalSquares).fill(null)
+  },
+
+  getRowIndices(row) {
+    const start = row * this.width
+    return Array.from({ length: this.width }, (_, i) => start + i)
+  },
+
+  isRowFull(row) {
+    const indices = this.getRowIndices(row)
+    return indices.every(index => 
+      this.domElements[index]?.classList.contains('taken')
+    )
+  },
+
+  clearRow(row) {
+    const indices = this.getRowIndices(row)
+    indices.forEach(index => {
+      if (this.domElements[index]) {
+        this.domElements[index].classList.remove('taken')
+        this.domElements[index].classList.remove('tetromino')
+        this.domElements[index].style.backgroundColor = ''
+      }
+    })
+  },
+
+  shiftRowsDown(fromRow) {
+    for (let row = fromRow; row > 0; row--) {
+      const currentIndices = this.getRowIndices(row)
+      const aboveIndices = this.getRowIndices(row - 1)
+      
+      currentIndices.forEach((currentIndex, i) => {
+        const aboveIndex = aboveIndices[i]
+        if (this.domElements[aboveIndex]?.classList.contains('taken')) {
+          this.domElements[currentIndex].classList.add('taken')
+          this.domElements[currentIndex].style.backgroundColor = 
+            this.domElements[aboveIndex].style.backgroundColor
+        } else {
+          this.domElements[currentIndex].classList.remove('taken')
+          this.domElements[currentIndex].style.backgroundColor = ''
+        }
+      })
+    }
+    
+    // Clear the top row
+    this.getRowIndices(0).forEach(index => {
+      this.domElements[index].classList.remove('taken')
+      this.domElements[index].style.backgroundColor = ''
+    })
+  }
+}
+
+// Initialize grid manager
+GridManager.initialize()
+
 function createGrids() {
   for (i = 0; i < 200; i++) {
     const gridA = document.createElement("div")
+    const tileNumber = document.createElement("span")
+    tileNumber.classList.add("tile-number")
+    tileNumber.textContent = i
+    gridA.appendChild(tileNumber)
     grid.appendChild(gridA)
+    GridManager.domElements[i] = gridA
   }
   for (i = 0; i < 10; i++) {
     const gridB = document.createElement("div")
     gridB.classList.add("taken")
+    const tileNumber = document.createElement("span")
+    tileNumber.classList.add("tile-number")
+    tileNumber.textContent = 200 + i
+    gridB.appendChild(tileNumber)
     grid.appendChild(gridB)
+    GridManager.domElements[200 + i] = gridB
   }
   for (i = 0; i < 16; i++) {
     const gridC = document.createElement("div")
@@ -148,14 +223,14 @@ function undraw() {
 function freeze() {
   if (
     current.some(index =>
-      squares[currentPosition + index + width].classList.contains("taken") ||
-      currentPosition + index + width >= squares.length
+      GridManager.domElements[currentPosition + index + width]?.classList.contains("taken") ||
+      currentPosition + index + width >= GridManager.totalSquares
     )
   ) {
     current.forEach(index => {
-      if (currentPosition + index < squares.length) {
-        squares[currentPosition + index].classList.add("taken")
-        squares[currentPosition + index].style.backgroundColor = colors[random]
+      if (currentPosition + index < GridManager.totalSquares) {
+        GridManager.domElements[currentPosition + index].classList.add("taken")
+        GridManager.domElements[currentPosition + index].style.backgroundColor = colors[random]
       }
     })
     
@@ -164,7 +239,7 @@ function freeze() {
     current = Tetrominoes[random][currentRotation]
     currentPosition = 4
     
-    if (current.some(index => squares[currentPosition + index].classList.contains("taken"))) {
+    if (current.some(index => GridManager.domElements[currentPosition + index]?.classList.contains("taken"))) {
       gameOver()
       return
     }
@@ -382,35 +457,33 @@ function displayShape() {
 
 //score
 function addScore() {
-  for (let i = 0; i < 199; i += width) {
-    const row = [i, i + 1, i + 2, i + 3, i + 4, i + 5, i + 6, i + 7, i + 8, i + 9]
-
-    if (row.every(index => squares[index].classList.contains("taken"))) {
-      if (score >= 700) {
-        score += 30
-      } else if (score >= 300) {
-        score += 25
-      } else if (score >= 150) {
-        score += 20
-      } else if (score >= 90) {
-        score += 20
-      } else if (score >= 30) {
-        score += 15
-      } else if (score >= 0) {
-        score += 10
-      }
-      gameDifficulty()
-      undraw()
-      scoreDisplay.innerHTML = score
-      row.forEach(index => {
-        squares[index].classList.remove("taken")
-        squares[index].classList.remove("tetromino")
-        squares[index].style.backgroundColor = ""
-      })
-      const squaresRemoved = squares.splice(i, width)
-      squares = squaresRemoved.concat(squares)
-      squares.forEach(cell => grid.appendChild(cell))
+  let rowsCleared = 0
+  
+  // Check each row from bottom to top
+  for (let row = GridManager.height - 1; row >= 0; row--) {
+    if (GridManager.isRowFull(row)) {
+      // Clear the row
+      GridManager.clearRow(row)
+      // Shift all rows above down
+      GridManager.shiftRowsDown(row)
+      rowsCleared++
+      // Check the same row again as it now contains new blocks
+      row++
     }
+  }
+
+  // Update score based on number of rows cleared
+  if (rowsCleared > 0) {
+    const scoreMultiplier = Math.min(rowsCleared, 4) // Cap at 4 rows
+    const baseScore = score >= 700 ? 30 :
+                     score >= 300 ? 25 :
+                     score >= 150 ? 20 :
+                     score >= 90 ? 20 :
+                     score >= 30 ? 15 : 10
+    
+    score += baseScore * scoreMultiplier
+    scoreDisplay.innerHTML = score
+    gameDifficulty()
   }
 }
 

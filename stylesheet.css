@@ -28,6 +28,7 @@ body {
 .grid div {
   height: 24px;
   width: 24px;
+  position: relative;
 }
 
 .mini-grid {
@@ -51,6 +52,26 @@ body {
   box-sizing: border-box;
   border-radius: 5px;
 }
+
+/* Tile number styling */
+.tile-number {
+  position: absolute;
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  z-index: 1;
+  font-family: monospace;
+}
+
+/* Ensure numbers are visible but don't interfere with game play */
+.grid div.taken .tile-number {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.grid div.tetromino .tile-number {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 /* buttons */
 .startBtn {
   margin: 45px 0 0 75px;
