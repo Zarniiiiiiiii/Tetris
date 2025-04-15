@@ -146,19 +146,31 @@ function undraw() {
 function freeze() {
   if (
     current.some(index =>
-      squares[currentPosition + index + width].classList.contains("taken")
+      squares[currentPosition + index + width].classList.contains("taken") ||
+      currentPosition + index + width >= squares.length
     )
   ) {
-    current.forEach(index => squares[currentPosition + index].classList.add("taken"))
+    current.forEach(index => {
+      if (currentPosition + index < squares.length) {
+        squares[currentPosition + index].classList.add("taken")
+        squares[currentPosition + index].style.backgroundColor = colors[random]
+      }
+    })
+    
     random = nextRandom
     nextRandom = Math.floor(Math.random() * Tetrominoes.length)
     current = Tetrominoes[random][currentRotation]
     currentPosition = 4
+    
+    if (current.some(index => squares[currentPosition + index].classList.contains("taken"))) {
+      gameOver()
+      return
+    }
+    
     popSound.play()
     draw()
     displayShape()
     addScore()
-    gameOver()
   }
 }
 
